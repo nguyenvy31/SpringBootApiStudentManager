@@ -1,0 +1,22 @@
+### Thêm sinh viên mới
+POST http://localhost:8080/api/students
+Content-Type: application/json
+
+{
+  "name": "Nguyen Van A",
+  "className": "CTK45",
+  "email": "vana@gmail.com",
+  "phone": "0123456789",
+  "gpa": 3.2,
+  "avatar": "link-anh.jpg",
+  "mssv": "CTK45A123"
+}
+
+
+
+
+### Lấy sinh viên theo id
+GET http://localhost:8080/api/students/1
+
+### Xoá sinh viên theo id
+DELETE http://localhost:8080/api/students/1
