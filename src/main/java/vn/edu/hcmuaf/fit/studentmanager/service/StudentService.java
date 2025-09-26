@@ -1,12 +1,13 @@
 package vn.edu.hcmuaf.fit.studentmanager.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.studentmanager.model.Student;
 import vn.edu.hcmuaf.fit.studentmanager.repository.StudentRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -29,4 +30,18 @@ public class StudentService {
     public void deleteStudent(int id) {
         studentRepository.deleteById(id);
     }
+
+    // Thống sinh viên theo điểm
+    public Map<String, Long> statsClassification() {
+        List<Student> students = studentRepository.findAll();
+
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("Xuất sắc", students.stream().filter(s -> s.getGpa() > 3.6).count());
+        stats.put("Giỏi", students.stream().filter(s -> s.getGpa() > 3.2 && s.getGpa() <= 3.6).count());
+        stats.put("Khá", students.stream().filter(s -> s.getGpa() > 2.5 && s.getGpa() <= 3.2).count());
+        stats.put("Trung bình/Yếu", students.stream().filter(s -> s.getGpa() <= 2.5).count());
+
+        return stats;
+    }
+
 }
