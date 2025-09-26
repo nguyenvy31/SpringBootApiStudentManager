@@ -44,4 +44,22 @@ public class StudentService {
         return stats;
     }
 
+    public List<Student> getTopStudentsByGPA() {
+        List<Student> all = studentRepository.findAll();
+        if (all.isEmpty()) return new ArrayList<>();
+
+        // tìm GPA cao nhất
+        double maxGPA = all.stream()
+                .mapToDouble(Student::getGpa)
+                .max()
+                .orElse(0);
+
+        // lọc ra các sinh viên có GPA = max
+        return all.stream()
+                .filter(s -> Double.compare(s.getGpa(), maxGPA) == 0)
+                .collect(Collectors.toList());
+
+    }
+
+
 }

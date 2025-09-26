@@ -49,4 +49,11 @@ public class StudentController {
         return studentService.statsClassification();
     }
 
+    //Lọc theo gpt cao nhất
+    @GetMapping("/top-gpa")
+    public List<Student> getTopStudents() {
+        return studentService.getTopStudentsByGPA();
+    }
+
+
 }
