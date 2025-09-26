@@ -29,4 +29,30 @@ public class StudentService {
     public void deleteStudent(int id) {
         studentRepository.deleteById(id);
     }
+
+    public Student updateStudent(int id, Student studentDetails) {
+        // Tìm sinh viên trong CSDL
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sinh viên với id: " + id));
+
+        // Cập nhật thông tin
+        student.setMssv(studentDetails.getMssv());
+        student.setName(studentDetails.getName());
+        student.setClassName(studentDetails.getClassName());
+        student.setEmail(studentDetails.getEmail());
+        student.setPhone(studentDetails.getPhone());
+        student.setGpa(studentDetails.getGpa());
+        student.setAvatar(studentDetails.getAvatar());
+
+        // Lưu lại vào CSDL
+        return studentRepository.save(student);
+    }
+
+    public Optional<Student> getStudentByMssv(String mssv) {
+        return Optional.ofNullable(studentRepository.findByMssv(mssv));
+    }
+
+    public List<Student> searchByName(String name) {
+        return studentRepository.findByNameContainingIgnoreCase(name);
+    }
 }
