@@ -6,7 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.studentmanager.model.Student;
 import vn.edu.hcmuaf.fit.studentmanager.service.StudentService;
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/students")
@@ -38,4 +42,18 @@ public class StudentController {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
     }
+
+    // Thống kê sinh viên theo điểm
+    @GetMapping("/stats/classification")
+    public Map<String, Long> statsClassification() {
+        return studentService.statsClassification();
+    }
+
+    //Lọc theo gpt cao nhất
+    @GetMapping("/top-gpa")
+    public List<Student> getTopStudents() {
+        return studentService.getTopStudentsByGPA();
+    }
+
+
 }
